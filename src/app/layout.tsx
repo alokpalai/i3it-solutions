@@ -42,7 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plexSans.variable} h-full`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${plexSans.variable} h-full`}
+    >
       <body className="flex min-h-full flex-col">
         <a href="#main-content" className="skip-link">
           Skip to main content
