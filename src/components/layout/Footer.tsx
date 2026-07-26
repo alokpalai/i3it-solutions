@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { footerNav } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { Container } from "@/components/ui/Container";
@@ -39,10 +40,22 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-10 border-t border-border pt-6">
+        <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-caption text-muted-foreground">
             &copy; {year} {siteConfig.name}. All rights reserved.
           </p>
+          {/* Developer attribution — owner-approved, Phase 2C. Plain <a> (external
+              domain, not an internal route) so next/link's prefetching doesn't
+              apply; kept visually subordinate to the copyright line. */}
+          <a
+            href="https://alokpalai.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-caption text-muted-foreground transition-colors hover:text-primary"
+          >
+            Developed by alokpalai.com
+            <ExternalLink className="h-3 w-3" aria-hidden="true" />
+          </a>
         </div>
       </Container>
     </footer>
