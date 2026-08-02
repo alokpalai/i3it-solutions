@@ -156,11 +156,20 @@ export const primaryNav: PrimaryNavItem[] = [
     href: "/government",
     menu: {
       kind: "simple",
+      // Phase 3D structure — supersedes the earlier-planned Sectors
+      // Served / Clients pair (docs/INFORMATION_ARCHITECTURE.md §9,
+      // docs/SEO.md §1 draft). No client showcase page had real, approved
+      // client data yet (no entry has displayPermission: Approved per
+      // §6.3), so nothing publishable was actually lost in the swap — see
+      // src/config/governmentContent.ts's header comment for detail.
       items: [
         { label: "Government Solutions Overview", href: "/government" },
         { label: "GeM Procurement", href: "/government/gem-procurement" },
-        { label: "Sectors Served", href: "/government/sectors-served" },
-        { label: "Clients / Organizations Worked With", href: "/government/clients" },
+        { label: "Public Sector", href: "/government/public-sector" },
+        { label: "Education", href: "/government/education" },
+        { label: "Defence", href: "/government/defence" },
+        { label: "Smart City", href: "/government/smart-city" },
+        { label: "Government FAQ", href: "/government/faq" },
       ],
     },
   },
