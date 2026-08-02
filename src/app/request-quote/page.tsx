@@ -1,32 +1,34 @@
-import type { Metadata } from "next";
 import { PageHero } from "@/components/internal/PageHero";
-import { IntroSection } from "@/components/internal/IntroSection";
+import { ContentSection } from "@/components/internal/ContentSection";
+import { RFQForm } from "@/components/contact/RFQForm";
+import { JsonLd } from "@/components/internal/JsonLd";
+import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
-// noindex: the RFQ form itself is later Phase 3 work (docs/UX.md §5 defines
-// the field plan) — this route shell exists so the site's primary CTA
-// (Header, Hero, every PageCTA) resolves to a real page instead of a 404.
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Request a Quote",
-  description: "Request a quote for technology procurement, infrastructure or support.",
-  robots: { index: false, follow: true },
-};
+  description: "Request a quote for technology procurement, infrastructure or support — organization, requirement and timeline in one form.",
+  path: "/request-quote",
+});
+
+const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Request Quote" }];
 
 export default function RequestQuotePage() {
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd(breadcrumbs)} />
+
       <PageHero
         eyebrow="Request Quote"
         title="Request a quote"
-        description="Tell us about your requirement and our team will follow up with the right approach."
-        breadcrumbs={[{ label: "Home", href: "/" }, { label: "Request Quote" }]}
+        description="Tell us about your requirement — only your organization, contact details and project name are required to get started; everything else helps us scope it faster."
+        breadcrumbs={breadcrumbs}
       />
-      <IntroSection>
-        <p>
-          The request-a-quote form is currently being finalized. Once available, it will let you
-          submit your requirement — organization, requirement type and a short description — in a
-          single step, with the option to add more detail afterward.
-        </p>
-      </IntroSection>
+
+      <ContentSection>
+        <div className="mx-auto max-w-3xl">
+          <RFQForm />
+        </div>
+      </ContentSection>
     </>
   );
 }
