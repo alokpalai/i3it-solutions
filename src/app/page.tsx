@@ -13,6 +13,7 @@ import { Credentials } from "@/components/home/Credentials";
 import { Testimonials } from "@/components/home/Testimonials";
 import { MediaHighlights } from "@/components/home/MediaHighlights";
 import { ProcurementCTA } from "@/components/home/ProcurementCTA";
+import { ContactSection } from "@/components/home/ContactSection";
 
 // docs/SEO.md §2 homepage title pattern: "i3it Solutions | {positioning}".
 // Uses title.absolute, not a plain string — a plain string here would be
@@ -35,6 +36,8 @@ export const metadata: Metadata = {
 // nothing — no verified public data exists yet for any of them (see
 // src/config/homepage.ts) — but stay composed here in their documented
 // conceptual position so populating the data later is enough to surface them.
+// ContactSection (Phase 3G) closes the page as the primary conversion
+// point, directly above the footer.
 export default function Home() {
   return (
     <>
@@ -52,6 +55,7 @@ export default function Home() {
       <Testimonials />
       <MediaHighlights />
       <ProcurementCTA />
+      <ContactSection />
     </>
   );
 }

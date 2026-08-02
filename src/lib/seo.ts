@@ -9,15 +9,20 @@ type PageMetadataInput = {
   title: string;
   description: string;
   path: string;
+  /** Set true for thin/architecture-only or post-action pages with no real
+   * content yet (docs/SEO.md §1: no URL indexed for a section with no real
+   * content). */
+  noindex?: boolean;
 };
 
-export function buildMetadata({ title, description, path }: PageMetadataInput): Metadata {
+export function buildMetadata({ title, description, path, noindex }: PageMetadataInput): Metadata {
   return {
     title,
     description,
     alternates: {
       canonical: path,
     },
+    ...(noindex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: `${title} | ${siteConfig.name}`,
       description,

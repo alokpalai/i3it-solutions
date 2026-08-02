@@ -270,6 +270,7 @@ export const footerNav: FooterColumn[] = [
     links: [
       { label: "Contact us", href: "/contact" },
       { label: "Request a quote", href: "/request-quote" },
+      { label: "Support", href: "/support" },
     ],
   },
   {
