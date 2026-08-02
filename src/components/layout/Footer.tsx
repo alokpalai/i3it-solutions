@@ -13,7 +13,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface">
       <Container className="py-12 lg:py-16">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-7">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-8">
           <div className="col-span-2 flex flex-col gap-3 md:col-span-3 lg:col-span-2">
             <span className="text-h5 text-foreground">{siteConfig.name}</span>
             <p className="max-w-xs text-body-sm text-muted-foreground">
