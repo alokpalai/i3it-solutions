@@ -1,4 +1,4 @@
-import { primaryNav, type NavLink } from "@/config/navigation";
+import { primaryNav, type NavLink, type NavColumn } from "@/config/navigation";
 
 // Small shared helpers so internal-page routes can derive their content
 // from src/config/navigation.ts (the single source of truth) instead of
@@ -7,6 +7,14 @@ import { primaryNav, type NavLink } from "@/config/navigation";
 export function getMegaMenuItems(label: string): NavLink[] {
   const item = primaryNav.find((navItem) => navItem.label === label);
   return item?.menu?.kind === "mega" ? item.menu.columns.flatMap((c) => c.items) : [];
+}
+
+// Returns the mega menu's columns as-is (heading + items), for pages that
+// want to present the same grouping the mega menu uses rather than a flat
+// list — e.g. the Solutions landing page's "Solution categories" section.
+export function getMegaMenuColumns(label: string): NavColumn[] {
+  const item = primaryNav.find((navItem) => navItem.label === label);
+  return item?.menu?.kind === "mega" ? item.menu.columns : [];
 }
 
 export function getSimpleMenuItems(label: string): NavLink[] {

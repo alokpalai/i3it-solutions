@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CheckCircle2 } from "lucide-react";
 import { PageHero } from "@/components/internal/PageHero";
-import { IntroSection } from "@/components/internal/IntroSection";
+import { ContentSection } from "@/components/internal/ContentSection";
+import { ProcessSteps } from "@/components/internal/ProcessSteps";
 import { RelatedLinks } from "@/components/internal/RelatedLinks";
 import { PageCTA } from "@/components/internal/PageCTA";
 import { getMegaMenuItems } from "@/lib/nav";
-import { shellIntro } from "@/config/internalContent";
+import { solutionDetails, deliveryMethodology } from "@/config/solutionsContent";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -22,22 +24,19 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = findItem(slug);
-  if (!item) return {};
+  const detail = solutionDetails[slug];
+  if (!item || !detail) return {};
   return {
     title: item.label,
-    description: `${item.label} — part of i3it Solutions' technology solutions portfolio.`,
-    robots: { index: false, follow: true },
+    description: detail.overview,
   };
 }
 
-// Route shell: this is not the final Solutions detail page (docs/ROADMAP.md
-// Phase 3B+). It exists now so /solutions links resolve to a real,
-// honestly-labeled page instead of a 404, without pretending final content
-// already exists (Phase 3A brief, Step 9).
 export default async function SolutionDetailPage({ params }: Props) {
   const { slug } = await params;
   const item = findItem(slug);
-  if (!item) notFound();
+  const detail = solutionDetails[slug];
+  if (!item || !detail) notFound();
 
   const related = getMegaMenuItems("Solutions").filter((i) => i.href !== item.href);
 
@@ -46,21 +45,62 @@ export default async function SolutionDetailPage({ params }: Props) {
       <PageHero
         eyebrow="Solutions"
         title={item.label}
+        description={detail.overview}
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Solutions", href: "/solutions" },
           { label: item.label },
         ]}
       />
-      <IntroSection>
-        <p>{shellIntro.solutions}</p>
-      </IntroSection>
+
+      <ContentSection title="Key capabilities">
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {detail.capabilities.map((capability) => (
+            <li key={capability} className="flex gap-3">
+              <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
+              <span className="text-body text-foreground">{capability}</span>
+            </li>
+          ))}
+        </ul>
+      </ContentSection>
+
+      {detail.technologyCategories.length > 0 && (
+        <RelatedLinks title="Technology categories" items={detail.technologyCategories} />
+      )}
+
+      <ContentSection title="Typical requirements we help with">
+        <ul className="flex flex-col gap-3">
+          {detail.clientRequirements.map((requirement) => (
+            <li key={requirement} className="flex gap-3 text-body text-muted-foreground">
+              <span aria-hidden="true" className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-secondary" />
+              {requirement}
+            </li>
+          ))}
+        </ul>
+      </ContentSection>
+
+      <ContentSection title="How we deliver this" className="bg-surface">
+        <ProcessSteps steps={deliveryMethodology} />
+      </ContentSection>
+
+      <ContentSection title="Benefits">
+        <ul className="grid gap-4 sm:grid-cols-2">
+          {detail.benefits.map((benefit) => (
+            <li key={benefit} className="flex gap-3">
+              <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
+              <span className="text-body text-foreground">{benefit}</span>
+            </li>
+          ))}
+        </ul>
+      </ContentSection>
+
       <RelatedLinks
-        title="Other solution areas"
+        title="Related solutions"
         items={related.map((i) => ({ label: i.label, href: i.href }))}
       />
+
       <PageCTA
-        title="Discuss this requirement"
+        title={`Discuss your ${item.label.toLowerCase()} requirement`}
         secondary={{ label: "Explore all solutions", href: "/solutions" }}
       />
     </>
