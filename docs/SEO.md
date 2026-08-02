@@ -45,10 +45,11 @@ Status: Phase 1 planning document. Builds on `docs/INFORMATION_ARCHITECTURE.md` 
 
 /government
 /government/gem-procurement
-/government/sectors-served
-/government/clients
-
-/clients/[category]                        -- optional alias, or nested under /government/clients
+/government/public-sector
+/government/education
+/government/defence
+/government/smart-city
+/government/faq
 
 /projects                                  -- not linked/indexed until real project data exists
 /projects/[project-slug]
@@ -102,7 +103,7 @@ Adjusted from the originally sketched structure to align exactly with the revise
 
 ## 4. Internal linking
 
-Follows the cross-linking rules already defined in `docs/INFORMATION_ARCHITECTURE.md §9`: every Product ↔ relevant Brands/Solutions, every Brand ↔ its category mappings, every Solution ↔ relevant Products/Brands/Government (where applicable), Government hub ↔ GeM/Sectors/Clients/Certifications. This cross-linking is also the primary internal-linking SEO strategy — topical clusters (e.g., all "networking" content interlinked) rather than a flat, unlinked page set.
+Follows the cross-linking rules already defined in `docs/INFORMATION_ARCHITECTURE.md §9`: every Product ↔ relevant Brands/Solutions, every Brand ↔ its category mappings, every Solution ↔ relevant Products/Brands/Government (where applicable), Government hub ↔ GeM/Public Sector/Education/Defence/Smart City/FAQ/Certifications (Phase 3D structure — supersedes the earlier-planned Sectors/Clients pair). This cross-linking is also the primary internal-linking SEO strategy — topical clusters (e.g., all "networking" content interlinked) rather than a flat, unlinked page set.
 
 Breadcrumbs (§1) double as both UX orientation and internal-link equity distribution.
 
