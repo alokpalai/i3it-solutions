@@ -1,6 +1,6 @@
 import { GovernmentHero } from "@/components/government/GovernmentHero";
 import { GovernmentCapabilities } from "@/components/government/GovernmentCapabilities";
-import { WorkflowTimeline } from "@/components/government/WorkflowTimeline";
+import { WorkflowTimeline } from "@/components/internal/WorkflowTimeline";
 import { IndustryGrid } from "@/components/government/IndustryGrid";
 import { TechnologyGrid } from "@/components/government/TechnologyGrid";
 import { ComplianceSection } from "@/components/government/ComplianceSection";

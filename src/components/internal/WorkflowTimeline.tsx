@@ -4,11 +4,14 @@ type WorkflowTimelineProps = {
   steps: WorkflowStep[];
 };
 
-// A longer, genuinely sequential procurement workflow (9 ordered steps)
-// reads better as a numbered timeline than ProcessSteps' "01"-overline grid
-// (built for 3-6 non-sequential items, e.g. the four capability pillars) —
-// this component is specifically for ordered, step-by-step processes, using
-// a semantic <ol> with a filled numbered node per step.
+// A longer, genuinely sequential process (e.g. a 9-step procurement
+// workflow or a hiring process) reads better as a numbered timeline than
+// ProcessSteps' "01"-overline grid (built for 3-6 non-sequential items,
+// e.g. the four capability pillars) — this component is specifically for
+// ordered, step-by-step processes, using a semantic <ol> with a filled
+// numbered node per step. Originally built for Government (Phase 3D),
+// relocated here once Company's hiring process (Phase 3E) needed the same
+// pattern — genuinely generic, not government-specific.
 export function WorkflowTimeline({ steps }: WorkflowTimelineProps) {
   return (
     <ol className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">

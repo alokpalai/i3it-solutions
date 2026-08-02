@@ -189,15 +189,21 @@ export const primaryNav: PrimaryNavItem[] = [
   },
   {
     label: "Company",
-    href: "/about",
+    href: "/company",
     menu: {
       kind: "simple",
+      // Phase 3E structure — hub moved from the previous top-level /about to
+      // /company (About is now a sub-page at /company/about); Leadership and
+      // CSR added. /about redirects to /company/about (next.config.ts).
       items: [
-        { label: "About i3it", href: "/about" },
+        { label: "Company Overview", href: "/company" },
+        { label: "About", href: "/company/about" },
         { label: "Vision & Mission", href: "/company/vision-mission" },
-        { label: "Why i3it", href: "/company/why-i3it" },
+        { label: "Leadership", href: "/company/leadership" },
         { label: "Certifications & Registrations", href: "/company/certifications" },
         { label: "Careers", href: "/company/careers" },
+        { label: "CSR", href: "/company/csr" },
+        { label: "Why i3it", href: "/company/why-i3it" },
       ],
     },
   },
@@ -220,7 +226,7 @@ export const footerNav: FooterColumn[] = [
   {
     heading: "Company",
     links: [
-      { label: "About", href: "/about" },
+      { label: "About", href: "/company/about" },
       { label: "Vision & Mission", href: "/company/vision-mission" },
       { label: "Certifications", href: "/company/certifications" },
       { label: "Careers", href: "/company/careers" },

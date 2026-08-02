@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 import { GovernmentHero } from "@/components/government/GovernmentHero";
-import { WorkflowTimeline } from "@/components/government/WorkflowTimeline";
+import { WorkflowTimeline } from "@/components/internal/WorkflowTimeline";
 import { GovernmentFAQ } from "@/components/government/GovernmentFAQ";
 import { GovernmentCTA } from "@/components/government/GovernmentCTA";
 import { ContentSection } from "@/components/internal/ContentSection";
