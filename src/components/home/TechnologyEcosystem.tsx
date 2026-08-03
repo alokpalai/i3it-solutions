@@ -10,7 +10,7 @@ import { technologyEcosystem } from "@/config/homepage";
 // work with" framing, never "Partner"/"Authorized"/"Certified" language.
 export function TechnologyEcosystem() {
   return (
-    <Section>
+    <Section spacing="compact">
       <Container className="flex flex-col gap-8">
         <SectionHeader
           eyebrow="Technology ecosystem"

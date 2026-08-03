@@ -1,7 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Search } from "lucide-react";
-import { requestQuoteLink } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { DesktopNav } from "@/components/navigation/DesktopNav";
@@ -13,10 +11,10 @@ import { MobileNav } from "@/components/navigation/MobileNav";
 //
 // Uses the same 1280px cap as Container but tighter, header-specific
 // gutters (24/32px vs Container's 24/32/64px) rather than the Container
-// primitive itself — at the 1024px breakpoint the full nav, search icon and
-// Request Quote button all become visible at once, and Container's 64px
-// desktop gutter left too little room; a nav bar legitimately needs
-// different edge spacing than a content section.
+// primitive itself — at the 1024px breakpoint the full nav and utility
+// controls all become visible at once, and Container's 64px desktop
+// gutter left too little room; a nav bar legitimately needs different
+// edge spacing than a content section.
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background">
@@ -35,20 +33,17 @@ export function Header() {
         <DesktopNav />
 
         <div className="flex shrink-0 items-center gap-1">
-          <button
-            type="button"
-            aria-label="Search"
-            className="hidden h-10 w-10 items-center justify-center rounded-sm text-foreground hover:text-primary lg:flex"
+          {/* Employee-facing, not customer-facing — see src/app/login and
+              src/app/signup: honest placeholders, no auth exists yet
+              (Phase 4 scope). */}
+          <Link
+            href="/login"
+            className="hidden px-3 text-body-sm font-medium text-foreground hover:text-primary lg:inline-flex lg:items-center"
           >
-            <Search aria-hidden="true" className="h-5 w-5" />
-          </button>
-          <Button
-            href={requestQuoteLink.href}
-            variant="accent"
-            size="sm"
-            className="hidden lg:inline-flex"
-          >
-            {requestQuoteLink.label}
+            Login
+          </Link>
+          <Button href="/signup" variant="secondary" size="sm" className="hidden lg:inline-flex">
+            Sign Up
           </Button>
           <MobileNav />
         </div>

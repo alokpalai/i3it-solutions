@@ -6,7 +6,7 @@ import { IconCard } from "./IconCard";
 
 export function CompanySnapshot() {
   return (
-    <Section className="bg-surface">
+    <Section spacing="compact" className="bg-surface">
       <Container className="flex flex-col gap-10">
         <SectionHeader title="i3it Solutions at a glance" />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">

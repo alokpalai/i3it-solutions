@@ -6,7 +6,7 @@ import { IconCard } from "./IconCard";
 
 export function WhatWeDo() {
   return (
-    <Section>
+    <Section spacing="compact">
       <Container className="flex flex-col gap-10">
         <SectionHeader
           eyebrow="What we do"

@@ -15,7 +15,7 @@ export function GovernmentProcurement() {
     // calls for a white ring on dark surfaces. Overriding the same variable
     // locally cascades it to the CTA button without touching the sitewide
     // default.
-    <Section className="bg-primary [--color-focus-ring:var(--palette-white)]">
+    <Section spacing="compact" className="bg-primary [--color-focus-ring:var(--palette-white)]">
       <Container className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div className="flex flex-col gap-4">
           <p className="text-overline uppercase tracking-wide text-primary-foreground/70">

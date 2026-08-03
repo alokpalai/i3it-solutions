@@ -12,7 +12,7 @@ export function FeaturedProducts() {
   if (featuredProducts.length === 0) return null;
 
   return (
-    <Section className="bg-surface">
+    <Section spacing="compact" className="bg-surface">
       <Container className="flex flex-col gap-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader
