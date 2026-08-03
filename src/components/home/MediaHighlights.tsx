@@ -11,7 +11,7 @@ export function MediaHighlights() {
   if (mediaItems.length === 0) return null;
 
   return (
-    <Section className="bg-surface">
+    <Section spacing="compact" className="bg-surface">
       <Container className="flex flex-col gap-8">
         <SectionHeader eyebrow="Media" title="News & updates" />
         <ul className="flex flex-col gap-4">

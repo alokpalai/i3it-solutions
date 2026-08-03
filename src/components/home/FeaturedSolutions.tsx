@@ -9,7 +9,7 @@ export function FeaturedSolutions() {
   if (featuredSolutions.length === 0) return null;
 
   return (
-    <Section>
+    <Section spacing="compact">
       <Container className="flex flex-col gap-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader

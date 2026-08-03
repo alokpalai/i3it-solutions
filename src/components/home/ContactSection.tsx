@@ -13,7 +13,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 // display); nothing here is a placeholder phone number or address.
 export function ContactSection() {
   return (
-    <Section className="bg-surface">
+    <Section spacing="compact" className="bg-surface">
       <Container>
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="flex flex-col gap-8">

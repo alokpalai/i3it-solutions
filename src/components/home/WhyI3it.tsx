@@ -6,7 +6,7 @@ import { whyPoints } from "@/config/homepage";
 
 export function WhyI3it() {
   return (
-    <Section className="bg-surface">
+    <Section spacing="compact" className="bg-surface">
       <Container className="flex flex-col gap-10">
         <SectionHeader title="Why i3it Solutions" />
         <div className="grid gap-x-8 gap-y-6 lg:grid-cols-2">

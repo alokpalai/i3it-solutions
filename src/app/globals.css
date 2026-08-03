@@ -18,16 +18,19 @@
   --palette-blue-hover: #1961a0;
   --palette-blue-active: #155185;
 
-  /* Bright accent orange: decorative/large-fill use ONLY. It fails WCAG AA
-     for text and small UI elements on white (2.70:1, see DESIGN_SYSTEM.md
-     §2.2-2.3) — do not wire this into any semantic text/interactive token. */
-  --palette-orange: #f57c00;
+  /* Bright accent orange (owner-specified: #FB6C00). Decorative/large-fill
+     use ONLY — ~2.9:1 with white text, well under WCAG AA's 4.5:1 (same
+     failure class documented for the previous #F57C00 in DECISIONS.md
+     B11). Do not wire this into any semantic text/interactive token. */
+  --palette-orange: #fb6c00;
 
-  /* Accent-safe deep orange: the ONLY orange used for text, icons, or
-     button labels, per the Phase 1 accessibility decision (DECISIONS.md B11). */
-  --palette-orange-deep: #b35300;
-  --palette-orange-deep-hover: #9a4700;
-  --palette-orange-deep-active: #843d00;
+  /* Accent-safe deep orange: same hue as --palette-orange, darkened until
+     white text passes WCAG AA (5.41:1) — the ONLY orange used for text,
+     icons, or button labels, per the Phase 1 accessibility decision
+     (DECISIONS.md B11) applied to the new owner-specified hue. */
+  --palette-orange-deep: #b04c00;
+  --palette-orange-deep-hover: #974100;
+  --palette-orange-deep-active: #823800;
 
   --palette-neutral-900: #171717;
   --palette-neutral-600: #4b5563;

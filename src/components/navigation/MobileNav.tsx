@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu, Search, X } from "lucide-react";
-import { primaryNav, requestQuoteLink } from "@/config/navigation";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { primaryNav } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 
@@ -130,16 +130,14 @@ export function MobileNav() {
           </nav>
 
           <div className="flex flex-col gap-3 border-t border-border px-4 py-4">
-            <button
-              type="button"
-              className="flex items-center gap-2 py-2 text-body-sm font-medium text-foreground"
-            >
-              <Search aria-hidden="true" className="h-5 w-5" />
-              Search
-            </button>
-            <Button href={requestQuoteLink.href} variant="accent" onClick={close}>
-              {requestQuoteLink.label}
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button href="/login" variant="ghost" onClick={close} className="flex-1">
+                Login
+              </Button>
+              <Button href="/signup" variant="secondary" onClick={close} className="flex-1">
+                Sign Up
+              </Button>
+            </div>
           </div>
         </div>
       </dialog>

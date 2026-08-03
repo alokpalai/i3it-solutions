@@ -11,7 +11,7 @@ export function Credentials() {
   if (credentials.length === 0) return null;
 
   return (
-    <Section className="bg-surface">
+    <Section spacing="compact" className="bg-surface">
       <Container className="flex flex-col gap-10">
         <SectionHeader eyebrow="Credentials" title="Certifications & registrations" />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
