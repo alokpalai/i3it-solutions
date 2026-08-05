@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* Redefines Tailwind's `dark:` variant to key off a manual data-theme="dark"
+   attribute rather than the prefers-color-scheme media query — scoped in
+   practice to the authenticated /dashboard/* section (Phase 4B), whose
+   ThemeToggle (src/components/layout/ThemeToggle.tsx) is the only place
+   that sets the attribute. The public marketing site has no toggle and no
+   dark UI of its own (removed by explicit instruction earlier in this
+   project) — it just never triggers this variant, rather than being
+   unable to. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* =========================================================================
    Design tokens — docs/DESIGN_SYSTEM.md is the source of truth.
    Raw palette values stay private (--palette-*); components must consume
@@ -82,6 +92,48 @@
   --color-info: var(--palette-blue);
 
   --color-focus-ring: var(--palette-navy);
+}
+
+/* =========================================================================
+   Dark theme — overrides the semantic layer only (never --palette-*
+   directly), activated by ThemeToggle setting data-theme="dark" on <html>
+   within the authenticated dashboard shell. Brand hues (navy/blue/orange)
+   are lightened where they're used as TEXT on the new dark background so
+   they clear WCAG AA; large fills (e.g. bg-primary navy bands) keep the
+   light-mode value since navy already reads as "dark" either way.
+   ========================================================================= */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-background: #0b1220;
+  --color-foreground: #f1f5f9;
+
+  --color-surface: #111a2c;
+  --color-surface-muted: #16233b;
+  --color-surface-subtle: #0e1626;
+
+  --color-primary: #6690e0;
+  --color-primary-hover: #85a5e8;
+  --color-primary-active: #4c7fd6;
+  --color-primary-foreground: #0b1220;
+
+  --color-secondary: #5b9bdc;
+  --color-secondary-hover: #7aace2;
+  --color-secondary-active: #4a89c9;
+  --color-secondary-foreground: #0b1220;
+
+  --color-border: #253449;
+  --color-border-strong: #34455e;
+
+  --color-muted: #16233b;
+  --color-muted-foreground: #94a3b8;
+
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #5b9bdc;
+
+  --color-focus-ring: #85a5e8;
 }
 
 /* =========================================================================
