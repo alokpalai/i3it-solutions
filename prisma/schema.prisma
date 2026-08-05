@@ -1,0 +1,151 @@
+// Prisma schema — Phase 4A internal platform (staff-only; the public
+// website in src/app/ has no relationship to this data model). No live
+// database is provisioned yet — `prisma generate` runs fine against this
+// file with no connection, but `prisma migrate dev` / `prisma db seed`
+// need a real DATABASE_URL in .env before they'll do anything.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+// Prisma 7: connection URL lives in prisma.config.ts (CLI) and is passed to
+// PrismaClient via a driver adapter at runtime (src/lib/prisma.ts) — the
+// datasource block no longer accepts `url` directly.
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Identity & RBAC
+// ---------------------------------------------------------------------------
+
+// Data-driven rather than a hardcoded enum — "design a scalable permission
+// system" (Phase 4A brief) implies new roles/permissions should be
+// addable without a schema migration for the common case, just new rows.
+model Role {
+  id          String           @id @default(cuid())
+  name        String           @unique
+  description String?
+  isSystem    Boolean          @default(false) // seeded roles vs. later admin-created ones
+  users       User[]
+  permissions RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@map("roles")
+}
+
+// One row per (resource, action) pair, e.g. ("Projects", "view"),
+// ("Projects", "manage") — the Phase 4A brief's example resource list
+// (Dashboard, Projects, Users, CRM, RFQ, Products, Documents, Reports,
+// Settings) seeds the `resource` values; `action` stays free-form so
+// resources aren't forced into an identical verb set.
+model Permission {
+  id          String           @id @default(cuid())
+  resource    String
+  action      String
+  description String?
+  roles       RolePermission[]
+  createdAt   DateTime         @default(now())
+
+  @@unique([resource, action])
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  fullName     String
+  phone        String?
+  department   String?
+  avatarUrl    String?
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Restrict)
+
+  sessions            Session[]
+  accounts            Account[]
+  passwordResetTokens PasswordResetToken[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// ---------------------------------------------------------------------------
+// Auth.js (NextAuth v5) — standard Prisma adapter shape. Account and
+// VerificationToken aren't used by the Credentials-only flow built in this
+// phase, but including them now means adding an OAuth/SSO provider later
+// (Microsoft Entra ID is the obvious one for a staff platform) needs no
+// schema migration, only NextAuth config.
+// ---------------------------------------------------------------------------
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expires      DateTime
+
+  @@map("sessions")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// Deliberately separate from VerificationToken (which Auth.js owns) — this
+// one is queried/expired/invalidated entirely by our own forgot/reset
+// password flow (src/lib/actions/auth.ts), so it isn't tangled up with
+// Auth.js internals.
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@map("password_reset_tokens")
+}
