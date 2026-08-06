@@ -6,20 +6,14 @@ import type { MockTask, TaskPriority, TaskStatus } from "@/config/dashboardMockD
 import { formatDate } from "@/lib/formatDate";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { PriorityBadge } from "@/components/dashboard/PriorityBadge";
+import { ProgressBar } from "@/components/dashboard/ProgressBar";
 
 const PAGE_SIZE = 5;
 
 const PRIORITIES: TaskPriority[] = ["Low", "Medium", "High", "Urgent"];
-const STATUSES: TaskStatus[] = ["To Do", "In Progress", "In Review", "Done"];
-
-const PRIORITY_VARIANT: Record<TaskPriority, "default" | "accent"> = {
-  Low: "default",
-  Medium: "default",
-  High: "accent",
-  Urgent: "accent",
-};
+const STATUSES: TaskStatus[] = ["To Do", "In Progress", "Review", "Blocked", "Completed"];
 
 export function TaskTable({ tasks }: { tasks: MockTask[] }) {
   const [search, setSearch] = useState("");
@@ -115,19 +109,14 @@ export function TaskTable({ tasks }: { tasks: MockTask[] }) {
                 <tr key={task.id} className="border-b border-border text-body-sm">
                   <td className="max-w-56 truncate py-3 pr-4 font-medium text-foreground">{task.title}</td>
                   <td className="py-3 pr-4">
-                    <Badge variant={PRIORITY_VARIANT[task.priority]}>{task.priority}</Badge>
+                    <PriorityBadge priority={task.priority} />
                   </td>
                   <td className="py-3 pr-4 text-muted-foreground">{task.status}</td>
                   <td className="py-3 pr-4 text-muted-foreground">{formatDate(task.dueDate)}</td>
                   <td className="py-3 pr-4 text-muted-foreground">{task.assignedBy}</td>
                   <td className="max-w-48 truncate py-3 pr-4 text-muted-foreground">{task.project}</td>
                   <td className="py-3">
-                    <div className="flex items-center gap-2">
-                      <div className="h-1.5 w-16 overflow-hidden rounded-full bg-surface-muted">
-                        <div className="h-full rounded-full bg-secondary" style={{ width: `${task.progress}%` }} />
-                      </div>
-                      <span className="text-caption text-muted-foreground">{task.progress}%</span>
-                    </div>
+                    <ProgressBar value={task.progress} className="w-24" />
                   </td>
                 </tr>
               ))}

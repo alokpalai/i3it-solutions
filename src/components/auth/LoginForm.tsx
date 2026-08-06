@@ -36,7 +36,7 @@ export function LoginForm() {
       setSubmitError(result.error);
       return;
     }
-    const callbackUrl = searchParams.get("callbackUrl") ?? "/profile";
+    const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard";
     router.push(callbackUrl);
     router.refresh();
   };

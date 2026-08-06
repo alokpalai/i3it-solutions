@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { logoutAction } from "@/lib/actions/auth";
 import { dashboardNavItems, dashboardFooterNavItems, type DashboardNavItem } from "@/config/dashboardNav";
 import { siteConfig } from "@/config/site";
+import { isNavItemActive } from "@/lib/isNavItemActive";
 
 function NavLink({ item, collapsed, active }: { item: DashboardNavItem; collapsed: boolean; active: boolean }) {
   return (
@@ -62,13 +63,13 @@ export function Sidebar() {
 
       <nav aria-label="Dashboard" className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-2">
         {dashboardNavItems.map((item) => (
-          <NavLink key={item.href} item={item} collapsed={collapsed} active={pathname === item.href} />
+          <NavLink key={item.href} item={item} collapsed={collapsed} active={isNavItemActive(pathname, item.href)} />
         ))}
       </nav>
 
       <div className="flex flex-col gap-1 border-t border-border px-3 py-3">
         {dashboardFooterNavItems.map((item) => (
-          <NavLink key={item.href} item={item} collapsed={collapsed} active={pathname === item.href} />
+          <NavLink key={item.href} item={item} collapsed={collapsed} active={isNavItemActive(pathname, item.href)} />
         ))}
         <form action={logoutAction}>
           <button

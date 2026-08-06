@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { logoutAction } from "@/lib/actions/auth";
 import { dashboardNavItems, dashboardFooterNavItems } from "@/config/dashboardNav";
 import { siteConfig } from "@/config/site";
+import { isNavItemActive } from "@/lib/isNavItemActive";
 
 // Mobile equivalent of Sidebar.tsx — same nav data, native <dialog> drawer
 // (matches the public site's MobileNav pattern: free focus containment
@@ -65,7 +66,7 @@ export function MobileDrawer() {
             <nav aria-label="Dashboard" className="flex-1 overflow-y-auto px-3 py-3">
               <ul className="flex flex-col gap-1">
                 {[...dashboardNavItems, ...dashboardFooterNavItems].map((item) => {
-                  const active = pathname === item.href;
+                  const active = isNavItemActive(pathname, item.href);
                   return (
                     <li key={item.href}>
                       <Link
