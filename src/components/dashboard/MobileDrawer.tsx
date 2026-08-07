@@ -9,15 +9,19 @@ import { logoutAction } from "@/lib/actions/auth";
 import { dashboardNavItems, dashboardFooterNavItems } from "@/config/dashboardNav";
 import { siteConfig } from "@/config/site";
 import { isNavItemActive } from "@/lib/isNavItemActive";
+import { hasPermission } from "@/lib/permissions";
 
 // Mobile equivalent of Sidebar.tsx — same nav data, native <dialog> drawer
 // (matches the public site's MobileNav pattern: free focus containment
 // and Escape-to-close from the browser, no extra JS).
-export function MobileDrawer() {
+export function MobileDrawer({ userPermissions = [] }: { userPermissions?: string[] }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const visibleNavItems = dashboardNavItems.filter(
+    (item) => !item.requires || hasPermission(userPermissions, item.requires.resource, item.requires.action),
+  );
 
   function open() {
     dialogRef.current?.showModal();
@@ -65,7 +69,7 @@ export function MobileDrawer() {
 
             <nav aria-label="Dashboard" className="flex-1 overflow-y-auto px-3 py-3">
               <ul className="flex flex-col gap-1">
-                {[...dashboardNavItems, ...dashboardFooterNavItems].map((item) => {
+                {[...visibleNavItems, ...dashboardFooterNavItems].map((item) => {
                   const active = isNavItemActive(pathname, item.href);
                   return (
                     <li key={item.href}>

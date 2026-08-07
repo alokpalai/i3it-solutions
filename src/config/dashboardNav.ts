@@ -9,9 +9,19 @@ import {
   Bell,
   User,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 
-export type DashboardNavItem = { label: string; href: string; icon: LucideIcon };
+export type DashboardNavItem = {
+  label: string;
+  href: string;
+  icon: LucideIcon;
+  /** Only rendered for users whose session permissions satisfy this
+   * resource:action — used for "Admin", which is otherwise a dead link
+   * (and a confusing one) for the ~90% of roles that /dashboard/admin's
+   * own server-side redirect would bounce straight to /access-denied. */
+  requires?: { resource: import("@/lib/permissions").ResourceName; action?: "view" | "manage" };
+};
 
 // Sidebar's exact list from the Phase 4B brief. "Documents" and
 // "Settings" aren't in the brief's own ROUTES list, but leaving them as
@@ -27,6 +37,7 @@ export const dashboardNavItems: DashboardNavItem[] = [
   { label: "Messages", href: "/dashboard/messages", icon: MessageSquare },
   { label: "Documents", href: "/dashboard/documents", icon: FileText },
   { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
+  { label: "Admin", href: "/dashboard/admin", icon: ShieldCheck, requires: { resource: "Roles", action: "view" } },
 ];
 
 export const dashboardFooterNavItems: DashboardNavItem[] = [
