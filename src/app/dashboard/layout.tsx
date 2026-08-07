@@ -18,6 +18,7 @@ export default async function DashboardRootLayout({ children }: { children: Reac
       <DashboardLayout
         userName={session?.user?.name ?? "Employee"}
         userRole={session?.user?.role}
+        userPermissions={session?.user?.permissions ?? []}
         notifications={mockNotifications}
       >
         {children}

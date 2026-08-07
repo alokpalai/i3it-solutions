@@ -12,6 +12,7 @@
 // are both set in the environment running this script; otherwise it's
 // skipped and logs that it was skipped.
 
+import "dotenv/config";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { hashPassword } from "../src/lib/password";

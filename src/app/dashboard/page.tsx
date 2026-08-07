@@ -28,8 +28,8 @@ export default async function DashboardHomePage() {
   const session = await auth();
   const firstName = (session?.user?.name ?? "there").split(" ")[0];
 
-  const pendingTasks = mockTasks.filter((t) => t.status !== "Done");
-  const completedTasks = mockTasks.filter((t) => t.status === "Done");
+  const pendingTasks = mockTasks.filter((t) => t.status !== "Completed");
+  const completedTasks = mockTasks.filter((t) => t.status === "Completed");
   const unreadMessages = mockConversations.reduce((sum, c) => sum + c.unreadCount, 0);
   const upcomingMeetings = mockCalendarEvents.filter((e) => e.type === "Meeting");
   const upcomingDeadlines = mockCalendarEvents
