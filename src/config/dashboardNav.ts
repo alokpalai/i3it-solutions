@@ -9,7 +9,12 @@ import {
   Bell,
   User,
   Settings,
+<<<<<<< Updated upstream
   ShieldCheck,
+=======
+  ShoppingCart,
+  Warehouse,
+>>>>>>> Stashed changes
 } from "lucide-react";
 
 export type DashboardNavItem = {
@@ -32,6 +37,8 @@ export type DashboardNavItem = {
 export const dashboardNavItems: DashboardNavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Projects", href: "/dashboard/projects", icon: FolderKanban },
+  { label: "Procurement", href: "/dashboard/procurement", icon: ShoppingCart },
+  { label: "Inventory", href: "/dashboard/inventory", icon: Warehouse },
   { label: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
   { label: "Calendar", href: "/dashboard/calendar", icon: Calendar },
   { label: "Messages", href: "/dashboard/messages", icon: MessageSquare },
