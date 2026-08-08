@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Breadcrumbs, type BreadcrumbItem } from "@/components/internal/Breadcrumbs";
 import { dashboardNavItems, dashboardFooterNavItems } from "@/config/dashboardNav";
 import { getProjectById } from "@/lib/projectMetrics";
+import { getOrganizationById } from "@/config/crmMockData";
 
 const ALL_ITEMS = [...dashboardNavItems, ...dashboardFooterNavItems];
 
@@ -22,10 +23,13 @@ function titleCase(segment: string): string {
 // server equivalent inside a shared layout. Originally a flat two-level
 // trail (Dashboard > <section>) covered every route; Phase 4C's project
 // detail routes went a level deeper (/dashboard/projects/[id]/<tab>), so
-// that subtree got its own resolver. Phase 4F's admin section adds a
-// plain /dashboard/admin/<section> level plus one detail route
-// (/dashboard/admin/users/[id]) — everything else still falls through to
-// the original two-level case.
+// that subtree got its own resolver. Phase 4D's CRM section and Phase 4F's
+// admin section each add their own shapes on top: a plain
+// /dashboard/<section>/<sub-section> level, and (CRM only) organization
+// detail routes one level deeper still
+// (/dashboard/crm/organizations/[id]/<tab>) plus (admin only) one detail
+// route (/dashboard/admin/users/[id]) — everything else still falls
+// through to the original two-level case.
 export function DashboardBreadcrumbs() {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
@@ -33,6 +37,8 @@ export function DashboardBreadcrumbs() {
   const items: BreadcrumbItem[] = [{ label: "Dashboard", href: "/dashboard" }];
 
   const isProjectDetail = segments[1] === "projects" && segments.length > 2 && segments[2] !== "new";
+  const isCrmOrgDetail = segments[1] === "crm" && segments[2] === "organizations" && segments.length > 3;
+  const isCrmSection = segments[1] === "crm" && segments.length > 2 && !isCrmOrgDetail;
   const isUserDetail = segments[1] === "admin" && segments[2] === "users" && segments.length > 3;
   const isAdminSection = segments[1] === "admin" && segments.length > 2 && !isUserDetail;
 
@@ -44,6 +50,18 @@ export function DashboardBreadcrumbs() {
       items.push({ label: project.name, href: tab ? `/dashboard/projects/${project.id}/overview` : undefined });
       if (tab) items.push({ label: titleCase(tab) });
     }
+  } else if (isCrmOrgDetail) {
+    const organization = getOrganizationById(segments[3]);
+    items.push({ label: "CRM", href: "/dashboard/crm" });
+    items.push({ label: "Organizations", href: "/dashboard/crm/organizations" });
+    if (organization) {
+      const tab = segments[4];
+      items.push({ label: organization.name, href: tab ? `/dashboard/crm/organizations/${organization.id}/overview` : undefined });
+      if (tab) items.push({ label: titleCase(tab) });
+    }
+  } else if (isCrmSection) {
+    items.push({ label: "CRM", href: "/dashboard/crm" });
+    items.push({ label: labelFor(`/${segments.join("/")}`) });
   } else if (isUserDetail) {
     // The user's real name isn't available here — this component is
     // client-only (usePathname has no server equivalent) and a Prisma

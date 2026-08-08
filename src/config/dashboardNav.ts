@@ -10,6 +10,7 @@ import {
   User,
   Settings,
   ShieldCheck,
+  Contact2,
 } from "lucide-react";
 
 export type DashboardNavItem = {
@@ -31,6 +32,7 @@ export type DashboardNavItem = {
 // isn't in either list here — Sidebar/MobileNav render it separately.
 export const dashboardNavItems: DashboardNavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "CRM", href: "/dashboard/crm", icon: Contact2 },
   { label: "Projects", href: "/dashboard/projects", icon: FolderKanban },
   { label: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
   { label: "Calendar", href: "/dashboard/calendar", icon: Calendar },

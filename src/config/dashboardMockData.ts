@@ -32,6 +32,10 @@ export const mockUsers: MockUser[] = [
   { id: "u6", name: "Vikram Singh", initials: "VS", role: "Employee", department: "Delivery", availability: "On Leave" },
   { id: "u7", name: "Ishaan Verma", initials: "IV", role: "Employee", department: "Delivery", availability: "Available" },
   { id: "u8", name: "Priya Nair", initials: "PN", role: "Support", department: "Technical Support", availability: "Busy" },
+  // Added for Phase 4D (CRM) — a single Sales-role user made "Assigned
+  // Sales Executive" a meaningless filter everywhere it appeared.
+  { id: "u9", name: "Sanjana Bhatt", initials: "SB", role: "Sales", department: "Business Development", availability: "Available" },
+  { id: "u10", name: "Arjun Malhotra", initials: "AM", role: "Sales", department: "Business Development", availability: "Busy" },
 ];
 
 // Phase 4C's full project lifecycle — replaces Phase 4B's simpler
